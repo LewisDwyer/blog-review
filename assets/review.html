@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blog review</title>
+<style>
+:root{--ink:#202c3f;--muted:#58677a;--blue:#234ec6;--paper:#fff;--ground:#edf1f7;--line:#d7dfeb;--mark:#fff1ac;--error:#a32131}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--ground);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:8px 12px;background:white;color:var(--ink)}button:hover{border-color:var(--blue);color:var(--blue)}button:disabled{opacity:.5;cursor:default}button.primary{background:var(--blue);border-color:var(--blue);color:white}button.quiet{background:transparent;border-color:transparent;padding:4px 6px;color:var(--muted)}button.danger{color:var(--error)}:focus-visible{outline:3px solid #91aaff;outline-offset:3px}textarea{width:100%;resize:vertical;padding:12px;border:1px solid #aab8ce;border-radius:6px;background:white;color:var(--ink);min-height:95px}header{position:sticky;top:0;z-index:5;background:white;border-bottom:1px solid var(--line);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-size:19px;font-weight:700;letter-spacing:-.5px}.brand span{font-weight:400;color:var(--muted);font-size:14px;letter-spacing:0;margin-left:14px}.header-actions{display:flex;gap:12px;align-items:center}#save-status{font-size:13px;color:var(--muted)}#save-status.error{color:var(--error);max-width:420px}.layout{max-width:1420px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) 345px;gap:28px;padding:32px 28px 100px}.reading{min-width:0}.instruction{margin:0 0 18px;color:var(--muted);font-size:14px}.paper{background:var(--paper);border:1px solid var(--line);padding:44px 54px;min-height:70vh;box-shadow:0 3px 12px #20325408}.block{position:relative;scroll-margin-top:110px;margin:0 0 15px;border-left:3px solid transparent;padding-left:15px;margin-left:-18px}.block.annotated{border-left-color:#d5ab26}.block.changed{border-left-color:var(--blue)}.block.focused{background:#f1f5ff}.block-tools{display:flex;gap:8px;align-items:center;min-height:27px;font-size:12px;opacity:0;transition:opacity .1s}.block:hover .block-tools,.block:focus-within .block-tools,.block.annotated .block-tools,.block.changed .block-tools{opacity:1}.block-tools button{font-size:12px;padding:2px 7px}.badge{color:var(--muted)}.prose{font:19px/1.75 Charter,"Bitstream Charter",Georgia,serif;overflow-wrap:anywhere}.prose h1{font-size:38px;line-height:1.2;letter-spacing:-.7px;margin:4px 0 24px}.prose h2{font-size:28px;line-height:1.3;margin:25px 0 14px}.prose h3{font-size:23px;line-height:1.35;margin:20px 0 12px}.prose p{margin:0 0 14px;white-space:pre-line}.prose ul,.prose ol{padding-left:26px;margin:8px 0 18px}.prose code{font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:#edf2fb;border-radius:3px;padding:2px 4px}.prose pre{white-space:pre-wrap;background:#f2f5fa;padding:18px;border-radius:5px;overflow:auto;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}.prose pre code{background:transparent;padding:0}.prose .source-block{color:var(--muted)}.prose blockquote{border-left:3px solid #a9bce9;margin:16px 0;padding-left:20px;color:var(--muted)}.link-text{color:var(--blue);text-decoration:underline}.image-note{display:block;padding:22px;background:#edf2fb;border:1px dashed #a5b6d6;font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.editor{font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;min-height:145px}.edit-actions{display:flex;gap:8px;margin-top:8px}.sidebar{position:sticky;top:105px;align-self:start;max-height:calc(100vh - 125px);overflow:auto;padding:0 3px 20px}.sidebar h2{font-size:17px;margin:0 0 12px}.sidebar h3{font-size:15px;margin:0 0 6px}.help{font-size:13px;color:var(--muted);margin:8px 0 15px}.section{border-bottom:1px solid var(--line);padding-bottom:24px;margin-bottom:24px}#selection-label{font-size:13px;background:var(--mark);padding:9px 12px;white-space:pre-wrap;max-height:130px;overflow:auto;border-left:3px solid #d5ab26}#comment-form[hidden],#banner[hidden]{display:none}.comment{background:white;padding:16px;border:1px solid var(--line);border-radius:6px;margin:10px 0}.comment blockquote{font:15px/1.5 Georgia,serif;margin:0 0 10px;padding:0 0 0 10px;border-left:3px solid #d5ab26;white-space:pre-wrap;overflow-wrap:anywhere}.comment p{white-space:pre-wrap;margin:8px 0;overflow-wrap:anywhere}.comment footer{display:flex;justify-content:space-between;font-size:12px}.empty{font-size:14px;color:var(--muted)}#banner{background:#e5edff;border:1px solid #bacbfa;padding:18px;margin-bottom:20px;border-radius:6px}#banner p{margin:0 0 10px}#fatal{padding:40px;max-width:750px;margin:auto;color:var(--error)}.bottom-help{color:var(--muted);font-size:12px;margin-top:20px}#retry{display:none}.selection-button{width:100%;text-align:left}.export{width:100%}#count{font-weight:400;color:var(--muted)}
+@media(max-width:1000px){.paper{padding:30px}.layout{gap:20px;grid-template-columns:minmax(0,1fr) 300px;padding:24px 18px}.prose{font-size:18px}.brand span{display:none}}
+@media(max-width:740px){header{padding:12px 16px;align-items:flex-start}.header-actions{gap:8px;flex-wrap:wrap;justify-content:flex-end}#save-status{order:2;width:100%;text-align:right}.layout{display:block;padding:20px 12px}.paper{padding:25px 24px}.sidebar{position:static;max-height:none;margin-top:30px}.block-tools{opacity:1}.prose h1{font-size:30px}.prose h2{font-size:25px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* A sheet of editable writing with marks in its margin. */
+.block{margin-bottom:18px;padding-left:0;margin-left:0;border-left:0}
+.prose[contenteditable=true]{cursor:text;min-height:1em;outline:none;border-radius:2px}
+.prose[contenteditable=true]:focus{box-shadow:-3px 0 0 #b9c9ed;padding-left:12px;margin-left:-12px}
+.prose::selection,.prose *::selection{background:#c9dcff}
+.margin-note{position:absolute;left:-43px;top:2px;border:0;background:transparent;color:#697c9b;font-size:23px;padding:0;width:30px;opacity:0;line-height:30px}
+.block:hover .margin-note,.block:focus-within .margin-note,.block.annotated .margin-note{opacity:1}
+.block.annotated .margin-note{color:#936d00}.badge{font-size:11px;position:absolute;top:-5px;right:-3px}
+#mark-tools{position:fixed;z-index:20;display:flex;gap:0;background:white;border:1px solid #c0cbdf;border-radius:8px;box-shadow:0 5px 24px #2032542b;padding:4px}
+#mark-tools[hidden]{display:none}#mark-tools button{border:0;border-radius:4px;font-size:14px;padding:9px 13px;white-space:nowrap}
+#highlight{box-shadow:inset 0 -4px #ffe277}#crossout{color:#a22c45;text-decoration:line-through;text-decoration-thickness:1.5px}
+#note-selection{color:var(--blue)}#mark-tools button:hover{background:#edf2fb}
+::highlight(review-highlight){background-color:#ffe98b;color:#282719}
+::highlight(review-delete){background-color:#ffe6eb;color:#a12640;text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#be3450}
+::highlight(review-comment){background-color:#e4ecff;text-decoration:underline;text-decoration-color:#6f90de;text-decoration-thickness:2px}
+.comment{border:0;border-left:3px solid #9bb5ef;background:#f8faff;border-radius:0 6px 6px 0}
+.comment.mark-highlight{border-left-color:#d7af2e;background:#fffbea}.comment.mark-delete{border-left-color:#bf4960;background:#fff3f5}
+.mark-label{font-size:12px;color:var(--muted);display:block;margin-bottom:8px}.comment blockquote{border:0;padding:0}.mark-delete blockquote{text-decoration:line-through;color:#a12640}
+.annotation-note{background:transparent;min-height:60px;padding:5px 0;border:0;border-radius:0;font-size:14px;resize:vertical}
+.comment footer{margin-top:8px}.paper{padding-top:46px}
+@media(max-width:740px){.margin-note{left:-23px;width:20px;font-size:20px}.block:hover .margin-note{opacity:1}.paper{padding-left:30px;padding-right:24px}}
+.review-controls{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px;flex-wrap:wrap}.review-controls .instruction{margin:0;flex:1;min-width:220px}
+.view-switch{display:flex;background:#e0e7f2;border-radius:7px;padding:3px;gap:3px}.view-switch button{border:0;background:transparent;font-size:13px;padding:7px 11px}.view-switch button[aria-pressed=true]{background:white;box-shadow:0 1px 4px #20325412;color:var(--blue)}
+#focus-nav{display:flex;align-items:center;gap:18px;background:white;border:1px solid var(--line);border-bottom:0;padding:16px 22px;border-radius:7px 7px 0 0}#focus-nav[hidden]{display:none}.focus-position{flex:1;min-width:0}#focus-position{font-size:14px;font-weight:600}#focus-kind{font-size:12px;color:var(--muted);margin-left:9px}.focus-position progress{display:block;width:100%;height:4px;margin-top:8px;accent-color:var(--blue)}.focus-buttons{display:flex;gap:8px}
+.focus-view .paper{padding-top:38px;padding-bottom:38px}.focus-view .block{transition:background-color .12s}.focus-view .block.is-unfocused{cursor:pointer;border-radius:4px}.focus-view .block.is-unfocused .prose{filter:blur(3px);opacity:.48;pointer-events:none;user-select:none}.focus-view .block.is-unfocused .margin-note{visibility:hidden}.focus-view .block.is-unfocused:hover{background:#edf2fb}.focus-view .block.is-unfocused:hover .prose{opacity:.65}.focus-view .block.is-current .prose{filter:none;opacity:1}.focus-view .block.is-current .margin-note{opacity:1}#focus-nav{position:sticky;z-index:4;scroll-margin-top:95px;box-shadow:0 3px 8px #20325408}#focus-context{display:none!important}#focus-end{font-size:13px;color:var(--muted);margin:14px 0 0}#focus-end[hidden]{display:none}
+
+@media(max-width:740px){.review-controls{gap:12px}.view-switch{width:100%}.view-switch button{flex:1}#focus-nav{gap:10px;padding:14px 12px}.focus-buttons button{padding:7px 10px}#focus-kind{display:block;margin-left:0}.focus-view .paper{min-height:260px}}
+</style>
+</head>
+<body>
+<header><div class="brand">Blog review <span id="filename"></span></div><div class="header-actions"><span id="save-status" role="status" aria-live="polite">Loading review…</span><button id="retry" type="button">Retry saving</button><button id="submit" class="primary" disabled>Submit review</button></div></header>
+<main class="layout" id="app" hidden>
+<div class="reading"><div id="banner" hidden><p><strong>Review submitted.</strong> Your corrections and notes are saved. Return to the agent and say “apply my feedback.”</p><button id="reopen">Continue editing</button></div><div class="review-controls"><p class="instruction">Click anywhere to edit. Select words to highlight, cross out, or add a note.</p><div class="view-switch" role="group" aria-label="Review mode"><button id="page-mode" aria-pressed="true">Full page</button><button id="focus-mode" aria-pressed="false">Paragraph focus</button></div></div><nav id="focus-nav" aria-label="Paragraph navigation" hidden><div class="focus-position"><span id="focus-position" aria-live="polite"></span><span id="focus-kind"></span><progress id="focus-progress" aria-label="Position in draft"></progress></div><div class="focus-buttons"><button id="focus-previous">Previous</button><button id="focus-next">Next</button></div></nav><article class="paper" id="article" aria-label="Blog draft"><p id="focus-context" hidden></p></article><p id="focus-end" hidden>Last passage. You can submit your review when you’re ready, or return to the full page.</p></div>
+<aside class="sidebar" aria-label="Review tools"><section class="section"><h2>Mark up the page</h2><button id="select" class="selection-button">Add a note to selected text</button><p class="help" id="selection-help">Drag across words for your highlighter, pen, and notes. All text on the page is editable.</p></section><section class="section"><label for="notes"><h2>Overall feedback</h2></label><textarea id="notes" placeholder="Tone, structure, missing details…" rows="5"></textarea><p class="help">Saved as you type. Click Submit review when you’re finished.</p></section><section class="section"><h2>Comments <span id="count">0</span></h2><div id="comments"></div></section><button id="export" class="export">Download feedback backup</button><p class="bottom-help">Your review is saved locally. The original draft changes when the agent applies your feedback.</p></aside>
+</main><div id="mark-tools" role="toolbar" aria-label="Mark selected text" hidden><button id="highlight" title="Highlight selected text">Highlight</button><button id="crossout" title="Mark selected text for deletion">Cross out</button><button id="note-selection" title="Add note (⌘/Ctrl + Alt + M)">Add note</button></div><div id="fatal" hidden role="alert"></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const token=location.hash.slice(1);
+let state, lastSelection=null, timer, queue=Promise.resolve(), dirty=false, failed=false, busy=false;
+const editorBaselines=new Map(),editorTexts=new Map();
+let reviewMode='page',focusIndex=0,focusMoving=false;
+function rememberView(){try{localStorage.setItem('blog-review-view-'+state.session_id,JSON.stringify({mode:reviewMode,block_id:state.blocks[focusIndex]?.id}));}catch(_){}}
+function passageKind(block){
+ const source=(state.edits[block.id]??block.source).trim();
+ if(/^#{1,6}\s/.test(source))return 'Heading';
+ if(/^(`{3,}|~{3,})/.test(source))return 'Code';
+ if(/^---\r?\n/.test(source))return 'Metadata';
+ if(/^\s*(?:[-+*]|\d+[.)])\s/.test(source))return 'List';
+ if(source.startsWith('<'))return 'Component';
+ return 'Paragraph';
+}
+function updateFocus(){
+ const focusing=reviewMode==='focus',total=state.blocks.length;
+ focusIndex=Math.max(0,Math.min(Math.max(0,total-1),focusIndex));
+ document.body.classList.toggle('focus-view',focusing);
+ $('page-mode').setAttribute('aria-pressed',String(!focusing));$('focus-mode').setAttribute('aria-pressed',String(focusing));
+ $('focus-mode').disabled=!total;$('focus-nav').hidden=!focusing||!total;
+ for(const [index,block] of state.blocks.entries()){
+  const node=$(block.id),inactive=focusing&&index!==focusIndex,prose=node.querySelector('.prose');
+  node.hidden=false;node.classList.toggle('is-unfocused',inactive);node.classList.toggle('is-current',focusing&&!inactive);
+  node.tabIndex=inactive?0:-1;
+  if(inactive){node.setAttribute('role','button');node.setAttribute('aria-label','Focus passage '+(index+1)+': '+prose.textContent.slice(0,120));}
+  else{node.removeAttribute('role');node.removeAttribute('aria-label');}
+  prose.contentEditable=String(!inactive&&!busy&&state.status!=='submitted');prose.tabIndex=inactive?-1:0;
+  prose.setAttribute('aria-readonly',String(inactive||busy||state.status==='submitted'));
+ }
+ $('focus-nav').style.top=(document.querySelector('header').getBoundingClientRect().height+6)+'px';
+ $('article').setAttribute('aria-label',focusing?'Blog draft. Click any blurred passage to focus it.':'Blog draft');
+ $('selection-help').textContent=focusing?'Click any blurred passage to focus it. Select words in the clear passage to highlight, cross out, or add a note.':'Drag across words for your highlighter, pen, and notes. All text on the page is editable.';
+ $('focus-position').textContent=total?'Passage '+(focusIndex+1)+' of '+total:'No passages';
+ $('focus-kind').textContent=total?passageKind(state.blocks[focusIndex]):'';
+ $('focus-progress').max=Math.max(1,total);$('focus-progress').value=total?focusIndex+1:0;
+ $('focus-previous').disabled=focusMoving||busy||focusIndex===0;
+ $('focus-next').disabled=focusMoving||busy||focusIndex>=total-1;
+ $('page-mode').disabled=focusMoving;$('focus-mode').disabled=focusMoving||!total;
+ $('focus-end').hidden=!focusing||!total||focusIndex!==total-1||state.status==='submitted';
+ $('focus-context').hidden=true;
+ rememberView();
+}
+function setReviewMode(mode){
+ if(focusMoving||reviewMode===mode)return;
+ if(mode==='focus'){
+  const active=document.activeElement?.closest('.block');
+  if(active){const index=state.blocks.findIndex(b=>b.id===active.id);if(index>=0)focusIndex=index;}
+ }
+ reviewMode=mode;hideTools();lastSelection=null;getSelection().removeAllRanges();updateFocus();renderComments();
+
+}
+async function moveFocus(index,{scroll=true,point=null}={}){
+ if(focusMoving||index<0||index>=state.blocks.length||index===focusIndex)return;
+ focusMoving=true;busy=true;let moved=false;refreshLocked();updateFocus();
+ try{
+  // Keep the paragraph in place on a save failure; do not silently move on.
+  if(dirty||failed)await save();
+  focusIndex=index;moved=true;hideTools();lastSelection=null;getSelection().removeAllRanges();updateFocus();renderComments();
+  if(scroll)$(state.blocks[focusIndex].id).scrollIntoView({block:'center'});
+ }catch(error){setStatus(error.message,true);}
+ finally{
+  busy=false;focusMoving=false;refreshLocked();updateFocus();
+  if(moved&&state.status!=='submitted'){
+   const prose=$(state.blocks[focusIndex].id).querySelector('.prose');prose.focus({preventScroll:true});
+   if(point){
+    let range=null;
+    if(document.caretPositionFromPoint){const caret=document.caretPositionFromPoint(point.x,point.y);if(caret&&prose.contains(caret.offsetNode)){range=document.createRange();range.setStart(caret.offsetNode,caret.offset);range.collapse(true);}}
+    else if(document.caretRangeFromPoint){const caret=document.caretRangeFromPoint(point.x,point.y);if(caret&&prose.contains(caret.startContainer))range=caret;}
+    if(range){getSelection().removeAllRanges();getSelection().addRange(range);}
+   }
+  }
+ }
+}
+async function jumpToPassage(id){
+ const index=state.blocks.findIndex(b=>b.id===id);
+ if(reviewMode==='focus'&&index!==focusIndex){await moveFocus(index);if(index!==focusIndex)return;}
+ const node=$(id);node.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});node.classList.add('focused');setTimeout(()=>node.classList.remove('focused'),1700);
+}
+$('page-mode').onclick=()=>setReviewMode('page');$('focus-mode').onclick=()=>setReviewMode('focus');
+$('focus-previous').onclick=()=>moveFocus(focusIndex-1);$('focus-next').onclick=()=>moveFocus(focusIndex+1);
+// Opt-in shortcut; ordinary arrows remain available for editing the text.
+document.addEventListener('keydown',event=>{if(reviewMode==='focus'&&event.altKey&&(event.ctrlKey||event.metaKey)&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();moveFocus(focusIndex+(event.key==='ArrowRight'?1:-1));}});
+const setStatus=(message,error=false)=>{ $('save-status').textContent=message; $('save-status').classList.toggle('error',error); $('retry').style.display=error?'inline-block':'none'; };
+async function api(path,data){
+ const response=await fetch(path,{method:data?'POST':'GET',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},...(data?{body:JSON.stringify(data)}:{})});
+ const result=await response.json();if(!response.ok){const error=new Error(result.error||'Could not connect to the review server.');error.status=response.status;throw error;}return result;
+}
+function schedule(){dirty=true;setStatus('Unsaved changes…');clearTimeout(timer);timer=setTimeout(()=>save(),450);}
+function save(){
+ clearTimeout(timer);
+ // Read current data when this task runs, so queued saves never restore an older edit.
+ queue=queue.catch(()=>{}).then(async()=>{
+  setStatus('Saving…');
+  const payload={revision:state.revision,edits:{...state.edits},comments:structuredClone(state.comments),notes:state.notes,status:state.status};
+  const snapshot=JSON.stringify([payload.edits,payload.comments,payload.notes,payload.status]);
+  try{let result;try{result=await api('/api/save',payload);}catch(error){
+    // A successful save can lose its response. Reconcile identical data before
+    // declaring a conflict; a genuinely different tab's work stays protected.
+    try{const remote=await api('/api/state');
+     if(JSON.stringify([remote.edits,remote.comments,remote.notes,remote.status])!==snapshot)throw error;
+     result={revision:remote.revision,status:remote.status};
+    }catch(_){throw error;}
+   }state.revision=result.revision;
+   dirty=snapshot!==JSON.stringify([state.edits,state.comments,state.notes,state.status]);failed=false;
+   setStatus(dirty?'Unsaved changes…':state.status==='submitted'?'Review submitted':'All changes saved');
+  }catch(error){failed=true;dirty=true;setStatus(error.message,true);throw error;}
+ });
+ queue.catch(()=>{});return queue;
+}
+function affected(c,id){return (c.anchors||[{block_id:c.block_id}]).some(a=>a.block_id===id);}
+function updateBlockStyle(block){
+ const node=$(block.id);node.classList.toggle('annotated',state.comments.some(c=>affected(c,block.id)));node.classList.toggle('changed',Object.hasOwn(state.edits,block.id));
+ const count=state.comments.filter(c=>affected(c,block.id)).length;
+ node.querySelector('.badge').textContent=count?String(count):'';
+ node.querySelector('.margin-note').title=count?count+' marks on this passage':'Add a note to this passage';
+}
+function element(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+function button(text,fn,cls){const e=element('button',text,cls);e.type='button';e.onclick=fn;return e;}
+function childrenMarkdown(node){return [...node.childNodes].map(toMarkdown).join('');}
+function toMarkdown(node){
+ if(node.nodeType===Node.TEXT_NODE)return node.textContent.replace(/\u00a0/g,' ');
+ if(node.nodeType!==Node.ELEMENT_NODE)return '';
+ const text=()=>childrenMarkdown(node),tag=node.tagName;
+ if(node.classList.contains('image-note'))return node.dataset.source||node.textContent;
+ if(node.classList.contains('link-text'))return '['+text()+']('+node.title+')';
+ if(tag==='BR')return '\n';
+ if(tag==='STRONG'||tag==='B')return '**'+text()+'**';
+ if(tag==='EM'||tag==='I')return '*'+text()+'*';
+ if(tag==='CODE')return '`'+node.textContent+'`';
+ if(/^H[1-6]$/.test(tag))return '#'.repeat(Number(tag[1]))+' '+text().trim()+'\n\n';
+ if(tag==='P'||tag==='DIV')return text()+'\n\n';
+ if(tag==='BLOCKQUOTE')return text().trim().split('\n').map(x=>'> '+x).join('\n')+'\n\n';
+ if(tag==='UL'||tag==='OL')return [...node.children].map((li,i)=>(li.dataset.prefix??(tag==='OL'?(Number(node.start||1)+i)+'. ':'- '))+childrenMarkdown(li).trim()).join('\n')+'\n\n';
+ if(tag==='PRE')return node.innerText;
+ if(tag==='HR')return '---\n\n';
+ return text();
+}
+function editorMarkdown(block,prose){
+ const baseline=editorBaselines.get(block.id);
+ if(prose.innerHTML===baseline.html)return baseline.source;
+ const current=baseline.source;
+ let result;
+ if(prose.querySelector(':scope > pre.source-block'))result=prose.innerText;
+ else if(/^\s*(`{3,}|~{3,})/.test(current)){
+  const lines=current.trimEnd().split(/\r?\n/),opening=lines[0],closing=/^\s*(`{3,}|~{3,})\s*$/.test(lines[lines.length-1])?lines[lines.length-1]:opening.match(/`{3,}|~{3,}/)[0];
+  result=opening+'\n'+prose.innerText.replace(/\n$/,'')+'\n'+closing;
+ }else result=childrenMarkdown(prose).trimEnd();
+ const suffix=current.match(/\s*$/)[0];
+ result=result.trimEnd()+suffix.replace(/\r\n/g,'\n');
+ if(current.includes('\r\n'))result=result.replace(/\r?\n/g,'\r\n');
+ return result;
+}
+function persistEditor(block,prose){
+ remapAnchors(block.id,editorTexts.get(block.id),prose.textContent);
+ editorTexts.set(block.id,prose.textContent);lastSelection=null;
+ const value=editorMarkdown(block,prose);
+ if(value===block.source)delete state.edits[block.id];else state.edits[block.id]=value;
+ updateBlockStyle(block);schedule();paintMarks();
+}
+function viewBlock(block){
+ const node=element('section',undefined,'block');node.id=block.id;
+ const margin=button('+',()=>startComment({block_id:block.id,quote:'',context:node.querySelector('.prose').textContent,block_source_at_creation:state.edits[block.id]??block.source}),'margin-note');margin.setAttribute('aria-label','Add note to passage');margin.append(element('span','','badge'));
+ const prose=element('div',undefined,'prose');prose.innerHTML=block.html;prose.contentEditable='true';prose.setAttribute('role','textbox');prose.setAttribute('aria-multiline','true');prose.setAttribute('aria-label','Edit passage');prose.spellcheck=true;
+ editorBaselines.set(block.id,{html:prose.innerHTML,source:state.edits[block.id]??block.source});
+ editorTexts.set(block.id,prose.textContent);
+ prose.onfocus=()=>{if(reviewMode!=='focus'){focusIndex=state.blocks.findIndex(b=>b.id===block.id);rememberView();}};
+ let suppressClick=false;
+ node.addEventListener('pointerdown',event=>{
+  if(reviewMode!=='focus'||!node.classList.contains('is-unfocused'))return;
+  event.preventDefault();suppressClick=true;
+  moveFocus(state.blocks.findIndex(b=>b.id===block.id),{scroll:false,point:{x:event.clientX,y:event.clientY}});
+ });
+ node.addEventListener('click',event=>{if(suppressClick){event.preventDefault();event.stopPropagation();suppressClick=false;}},true);
+ node.addEventListener('keydown',event=>{if(node.classList.contains('is-unfocused')&&event.target===node&&['Enter',' '].includes(event.key)){event.preventDefault();moveFocus(state.blocks.findIndex(b=>b.id===block.id),{scroll:false});}});
+ prose.oninput=()=>persistEditor(block,prose);
+ prose.onpaste=e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'));};
+ prose.ondrop=e=>e.preventDefault();
+ node.append(margin,prose);return node;
+}
+function readSelection(){
+ const selection=getSelection();if(!selection.rangeCount||selection.isCollapsed)return null;
+ const range=selection.getRangeAt(0),start=range.startContainer.nodeType===1?range.startContainer:range.startContainer.parentElement,end=range.endContainer.nodeType===1?range.endContainer:range.endContainer.parentElement;
+ const p=start.closest?.('.prose'),q=end.closest?.('.prose');if(!p||!q)return null;
+ const anchors=[];
+ for(const block of state.blocks){const prose=$(block.id).querySelector('.prose');if(!range.intersectsNode(prose))continue;
+  const clipped=document.createRange();clipped.selectNodeContents(prose);
+  if(prose===p)clipped.setStart(range.startContainer,range.startOffset);
+  if(prose===q)clipped.setEnd(range.endContainer,range.endOffset);
+  const quote=clipped.toString();if(!quote)continue;
+  const before=clipped.cloneRange();before.selectNodeContents(prose);before.setEnd(clipped.startContainer,clipped.startOffset);
+  const offset=before.toString().length;
+  anchors.push({block_id:block.id,quote,selection_start:offset,selection_end:offset+quote.length,context:prose.textContent.slice(Math.max(0,offset-100),offset+quote.length+100),prefix:prose.textContent.slice(Math.max(0,offset-100),offset),suffix:prose.textContent.slice(offset+quote.length,offset+quote.length+100),block_source_at_creation:state.edits[block.id]??block.source});
+ }
+ if(!anchors.length)return null;
+ return {...anchors[0],quote:anchors.map(a=>a.quote).join('\n\n'),context:anchors.map(a=>a.context).join('\n\n'),block_source_at_creation:anchors.map(a=>a.block_source_at_creation).join('\n'),anchors};
+}
+function hideTools(){$('mark-tools').hidden=true;}
+function showTools(){
+ if(!state||state.status==='submitted'||busy){hideTools();return;}
+ const picked=readSelection();if(!picked){lastSelection=null;hideTools();return;}
+ lastSelection=picked;
+ const rect=getSelection().getRangeAt(0).getBoundingClientRect(),tools=$('mark-tools');tools.hidden=false;
+ tools.style.left=Math.max(8,Math.min(innerWidth-tools.offsetWidth-8,rect.left+rect.width/2-tools.offsetWidth/2))+'px';
+ tools.style.top=Math.max(78,Math.min(innerHeight-tools.offsetHeight-8,rect.top-tools.offsetHeight-9))+'px';
+}
+ document.addEventListener('selectionchange',showTools);
+ document.addEventListener('scroll',hideTools,true);
+ window.addEventListener('resize',hideTools);
+ $('mark-tools').onpointerdown=e=>e.preventDefault();
+function startComment(picked){
+ if(!picked||state.status==='submitted'||busy)return;
+ state.comments.push({...picked,id:crypto.randomUUID(),kind:'comment',note:'No note added.',created_at:new Date().toISOString()});
+ hideTools();getSelection().removeAllRanges();renderComments();schedule();
+ const input=$('comments').lastElementChild.querySelector('textarea');input.focus();
+}
+$('select').onpointerdown=e=>{lastSelection=readSelection()||lastSelection;e.preventDefault();};
+function noteSelection(){const picked=readSelection()||lastSelection;if(!picked){$('selection-help').textContent='Select words on the page, then choose Add note. Or use + in the page margin.';return;}startComment(picked);}
+$('select').onclick=noteSelection;$('note-selection').onclick=noteSelection;
+function recordMark(kind,note){
+ const picked=readSelection()||lastSelection;if(!picked||state.status==='submitted'||busy)return;
+ state.comments.push({...picked,id:crypto.randomUUID(),kind,note,created_at:new Date().toISOString()});
+ hideTools();getSelection().removeAllRanges();renderComments();schedule();
+}
+$('highlight').onclick=()=>recordMark('highlight','Highlighted passage.');
+$('crossout').onclick=()=>recordMark('delete','Delete the crossed-out text.');
+ document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.altKey&&e.code==='KeyM'){e.preventDefault();noteSelection();}});
+function textRange(prose,start,end){
+ const walker=document.createTreeWalker(prose,NodeFilter.SHOW_TEXT);let node,offset=0,first=null,last=null;
+ while(node=walker.nextNode()){const length=node.textContent.length;if(first===null&&start<=offset+length)first=[node,Math.max(0,start-offset)];if(end<=offset+length){last=[node,Math.max(0,end-offset)];break;}offset+=length;}
+ if(!first||!last)return null;const range=document.createRange();range.setStart(...first);range.setEnd(...last);return range;
+}
+function locateAnchor(a,text){
+ const quote=a.current_quote??a.quote;if(!quote)return null;
+ const expected=a.current_start??a.selection_start??0;
+ if(a.current_start!==undefined&&text.slice(expected,expected+quote.length)===quote)return expected;
+ const context=a.current_context??a.context??'',within=Math.min(100,a.selection_start??0);
+ const prefix=a.current_prefix??a.prefix??context.slice(0,within),suffix=a.current_suffix??a.suffix??context.slice(within+quote.length);
+ const candidates=[];let from=0;
+ while(from<=text.length){const index=text.indexOf(quote,from);if(index<0)break;
+  let left=0,right=0;
+  while(left<prefix.length&&index-left>0&&prefix[prefix.length-left-1]===text[index-left-1])left++;
+  while(right<suffix.length&&index+quote.length+right<text.length&&suffix[right]===text[index+quote.length+right])right++;
+  candidates.push({index,score:left+right,distance:Math.abs(index-expected)});from=index+Math.max(1,quote.length);
+ }
+ candidates.sort((a,b)=>b.score-a.score||a.distance-b.distance);
+ if(!candidates.length)return null;
+ if(candidates.length>1&&(!candidates[0].score||candidates[0].score===candidates[1].score&&candidates[0].distance===candidates[1].distance))return null;
+ return candidates[0].index;
+}
+function remapAnchors(blockId,before,after){
+ if(before===undefined||before===after)return;
+ let start=0;while(start<before.length&&start<after.length&&before[start]===after[start])start++;
+ let tail=0;while(tail<before.length-start&&tail<after.length-start&&before[before.length-tail-1]===after[after.length-tail-1])tail++;
+ const oldEnd=before.length-tail,newEnd=after.length-tail,delta=after.length-before.length;
+ for(const c of state.comments){for(const a of c.anchors||[c]){
+  if(a.block_id!==blockId||!a.quote)continue;
+  if(a.removed_in_review){
+   const quote=a.removed_quote||a.quote;
+   const restored=locateAnchor({...a,current_quote:quote},after);
+   if(restored!==null&&restored>=start&&restored+quote.length<=newEnd){
+    a.current_start=restored;a.current_end=restored+quote.length;a.current_quote=quote;
+    a.current_prefix=after.slice(Math.max(0,restored-100),restored);a.current_suffix=after.slice(restored+quote.length,restored+quote.length+100);
+    a.current_context=a.current_prefix+quote+a.current_suffix;a.removed_in_review=false;a.detached=false;
+   }
+   continue;
+  }
+  let lo=locateAnchor(a,before),hi;
+  if(lo===null){a.detached=true;continue;}
+  hi=lo+(a.current_quote??a.quote).length;
+  if(oldEnd<=lo){lo+=delta;hi+=delta;}
+  else if(start<hi){lo=Math.min(lo,start);hi=hi>=oldEnd?hi+delta:newEnd;}
+  lo=Math.max(0,Math.min(after.length,lo));hi=Math.max(lo,Math.min(after.length,hi));
+  if(hi===lo)a.removed_quote=a.current_quote??a.quote;
+  a.current_start=lo;a.current_end=hi;a.current_quote=after.slice(lo,hi);
+  a.current_prefix=after.slice(Math.max(0,lo-100),lo);a.current_suffix=after.slice(hi,hi+100);
+  a.current_context=a.current_prefix+a.current_quote+a.current_suffix;
+  a.removed_in_review=hi===lo;a.detached=false;
+ }}
+}
+function paintMarks(){
+ if(!CSS.highlights)return;
+ const marks={highlight:[],delete:[],comment:[]};
+ for(const c of state.comments){for(const a of c.anchors||[c]){
+  if(!a.quote||a.removed_in_review)continue;const prose=$(a.block_id)?.querySelector('.prose');if(!prose)continue;const text=prose.textContent;
+  const offset=locateAnchor(a,text);a.detached=offset===null;if(offset===null)continue;
+  const range=textRange(prose,offset,offset+(a.current_quote??a.quote).length);if(range)marks[c.kind==='delete'?'delete':c.kind==='highlight'?'highlight':'comment'].push(range);
+ }
+ const status=document.querySelector('[data-comment-id="'+c.id+'"] .anchor-status');
+ if(status)status.textContent=(c.anchors||[c]).some(a=>a.detached)?'Passage changed. The original quote is kept here.':(c.anchors||[c]).some(a=>a.removed_in_review)?'Marked text was removed while editing.':'';
+ }
+ for(const [name,ranges] of Object.entries(marks))CSS.highlights.set('review-'+name,new Highlight(...ranges));
+}
+function renderComments(){
+ const visible=reviewMode==='focus'?state.comments.filter(c=>affected(c,state.blocks[focusIndex]?.id)):state.comments;
+ $('count').textContent=reviewMode==='focus'?visible.length+' here / '+state.comments.length+' total':state.comments.length;$('comments').replaceChildren();
+ if(!visible.length)$('comments').append(element('p',reviewMode==='focus'?'No notes on this passage yet. Select words to mark them up.':'Your margin notes and marks will appear here.', 'empty'));
+ for(const c of visible){
+  const kind=c.kind||'comment',card=element('div',undefined,'comment mark-'+kind);card.dataset.commentId=c.id;
+  card.append(element('span',kind==='delete'?'Crossed out':kind==='highlight'?'Highlighted':'Margin note','mark-label'),element('blockquote',c.quote||'Whole passage'));
+  card.append(element('p','','anchor-status help'));
+  const input=element('textarea',undefined,'annotation-note');input.setAttribute('aria-label','Note for marked passage');input.placeholder='Add a note…';input.value=['Highlighted passage.','No note added.'].includes(c.note)?'':c.note;input.disabled=state.status==='submitted';
+  input.oninput=()=>{c.note=input.value.trim()||(kind==='highlight'?'Highlighted passage.':kind==='delete'?'Delete the crossed-out text.':'No note added.');schedule();};card.append(input);
+  const footer=element('footer');footer.append(button('Go to passage',()=>jumpToPassage(c.block_id),'quiet'),button('Remove mark',()=>{if(state.status==='submitted')return;state.comments=state.comments.filter(x=>x.id!==c.id);renderComments();schedule();},'quiet danger'));card.append(footer);$('comments').append(card);
+ }
+ for(const b of state.blocks)updateBlockStyle(b);paintMarks();refreshLocked();
+}
+function refreshLocked(){
+ const locked=state.status==='submitted';$('banner').hidden=!locked;$('submit').disabled=locked||busy;$('notes').disabled=locked||busy;$('select').disabled=locked||busy;
+ for(const b of document.querySelectorAll('.margin-note,.comment button.danger,.annotation-note'))b.disabled=locked||busy;
+ if(locked||busy)hideTools();
+ updateFocus();
+}
+$('notes').oninput=()=>{state.notes=$('notes').value;schedule();};
+$('retry').onclick=()=>save().catch(()=>{});
+$('submit').onclick=async()=>{
+ if(busy||state.status==='submitted')return;
+ busy=true;refreshLocked();
+ try{
+  await save();state.status='submitted';await save();refreshLocked();$('banner').scrollIntoView({block:'center'});
+ }catch(error){state.status='draft';setStatus(error.message,true);}
+ finally{busy=false;refreshLocked();}
+};
+$('reopen').onclick=async()=>{state.status='draft';try{await save();refreshLocked();}catch(error){state.status='submitted';setStatus(error.message,true);refreshLocked();}};
+$('export').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='blog-review-'+state.session_id+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);};
+window.addEventListener('beforeunload',event=>{if(dirty||failed){event.preventDefault();event.returnValue='';}});
+api('/api/state').then(data=>{state=data;document.title=state.source_path.split('/').pop()+' — Blog review';$('filename').textContent=state.source_path.split('/').pop();$('notes').value=state.notes;
+ for(const block of state.blocks)$('article').append(viewBlock(block));
+ try{const view=JSON.parse(localStorage.getItem('blog-review-view-'+state.session_id)||'null');if(view){reviewMode=view.mode==='focus'?'focus':'page';const index=state.blocks.findIndex(b=>b.id===view.block_id);focusIndex=index>=0?index:0;}}catch(_){}
+ if(!CSS.highlights||typeof Highlight==='undefined'){
+  $('selection-help').textContent='This browser cannot display page marks. Use a browser with CSS Highlight support for highlighting and cross-outs. Direct editing and notes still work.';
+  $('highlight').disabled=true;$('crossout').disabled=true;
+ }
+ $('app').hidden=false;renderComments();setStatus(state.status==='submitted'?'Review submitted':'All changes saved');
+}).catch(error=>{$('fatal').hidden=false;$('fatal').textContent=error.message;setStatus('Could not open review',true);});
+</script>
+</body>
+</html>

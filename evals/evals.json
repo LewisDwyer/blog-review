@@ -1,0 +1,23 @@
+{
+  "skill_name": "blog-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Give me a browser review of this Markdown blog draft. I want to highlight phrases, leave comments, correct wording, and send my feedback back to you.",
+      "expected_output": "Running local review URL and persisted session; source remains unchanged. Comments preserve passage anchors and literal edits survive submission.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Apply my submitted blog-review feedback. The draft has also changed since you opened the review, so keep the new introduction and the MDX components.",
+      "expected_output": "Read submitted feedback, compare source hash, merge direct edits and interpret comments without overwriting newer work, then write a per-comment applied receipt.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "My review server stopped. Resume the same review so I can finish commenting and submit it.",
+      "expected_output": "Restart using --resume; recover saved corrections and comments, open the complete access URL, and avoid creating a replacement snapshot.",
+      "files": []
+    }
+  ]
+}
